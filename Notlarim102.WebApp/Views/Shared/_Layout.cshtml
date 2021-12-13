@@ -43,12 +43,12 @@
                             <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                         </button>
                     </form>*@
-            <ul class="navbar-nav mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a href="" class="nav-link active"><i class="fas fa-sign-in-alt"></i> Giriş</a></li>
-                <li class="nav-item"><a href="" class="nav-link active"><i class="fas fa-user-plus"></i> Üye Ol</a></li>
-                <li class="nav-item"><a href="" class="nav-link active"><i class="fas fa-user-check"></i> Ahmet Yıldız</a></li>
-                <li class="nav-item"><a href="" class="nav-link active"><i class="fas fa-sign-in-alt"></i> Çıkış </a></li>
-            </ul>
+                <ul class="navbar-nav mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item"><a href="" class="nav-link active"><i class="fas fa-sign-in-alt"></i> Giriş</a></li>
+                    <li class="nav-item"><a href="" class="nav-link active"><i class="fas fa-user-plus"></i> Üye Ol</a></li>
+                    <li class="nav-item"><a href="" class="nav-link active"><i class="fas fa-user-check"></i> Ahmet Yıldız</a></li>
+                    <li class="nav-item"><a href="" class="nav-link active"><i class="fas fa-sign-in-alt"></i> Çıkış </a></li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -61,12 +61,42 @@
             </div>
         </div>
     </header>
-    <div class="container body-content">
-        @RenderBody()
+
+    <div class="container-fluid body-content">
+        <div class="row">
+            <div class="col-md-2">
+                <p class="lead mt-5 fw-bolder ">Kategoriler</p>
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                        <span><i class="fas fa-angle-double-right"></i></span>
+                        Tümü
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action " aria-current="true">
+                        <span><i class="fas fa-angle-double-right"></i></span>
+                        Katagori - 1
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action " aria-current="true">
+                        <span><i class="fas fa-angle-double-right"></i></span>
+                        Katagori - 2
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action " aria-current="true">
+                        <span><i class="fas fa-angle-double-right"></i></span>
+                        Katagori - 3
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action " aria-current="true">
+                        <span><i class="fas fa-angle-double-right"></i></span>
+                        Katagori - 4
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-10">
+                @RenderBody()
+            </div>
+        </div>
         <hr />
     </div>
     <!-- Footer-->
-   @RenderSection("footer",required:false)
+    @RenderSection("footer", required: false)
     @Html.Partial("_PartialFooter")
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
