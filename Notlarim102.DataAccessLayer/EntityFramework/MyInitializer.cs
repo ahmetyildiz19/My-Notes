@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Notlarim102.DataAccessLayer
+namespace Notlarim102.DataAccessLayer.EntityFramework
 {
     public class MyInitializer : CreateDatabaseIfNotExists<NotlarimContext>
     {
@@ -64,7 +64,7 @@ namespace Notlarim102.DataAccessLayer
                 context.NotlarimUsers.Add(user);
             }
             context.SaveChanges();
-
+            
             //User list for using..
 
             List<NotlarimUser> userList = context.NotlarimUsers.ToList();

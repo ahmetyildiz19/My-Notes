@@ -23,9 +23,9 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!"><i class="fas fa-wrench"></i> Yönetim</a></li>
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!"><i class="far fa-star"></i> En Beğenilenler</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!"><i class="far fa-edit"></i> Son Yazılar</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#!"><i class="fas fa-exclamation-circle"></i> Hakkımızda</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/Home/MostLiked"><i class="far fa-star"></i> En Beğenilenler</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Home/Index"><i class="far fa-edit"></i> Son Yazılar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Home/About"><i class="fas fa-exclamation-circle"></i> Hakkımızda</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-shopping-cart"></i> Shop</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -61,33 +61,10 @@
             </div>
         </div>
     </header>
-
     <div class="container-fluid body-content">
         <div class="row">
             <div class="col-md-2">
-                <p class="lead mt-5 fw-bolder ">Kategoriler</p>
-                <div class="list-group">
-                    <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
-                        <span><i class="fas fa-angle-double-right"></i></span>
-                        Tümü
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action " aria-current="true">
-                        <span><i class="fas fa-angle-double-right"></i></span>
-                        Katagori - 1
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action " aria-current="true">
-                        <span><i class="fas fa-angle-double-right"></i></span>
-                        Katagori - 2
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action " aria-current="true">
-                        <span><i class="fas fa-angle-double-right"></i></span>
-                        Katagori - 3
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action " aria-current="true">
-                        <span><i class="fas fa-angle-double-right"></i></span>
-                        Katagori - 4
-                    </a>
-                </div>
+                @Html.Partial("_PartialCategories")
             </div>
             <div class="col-md-10">
                 @RenderBody()
