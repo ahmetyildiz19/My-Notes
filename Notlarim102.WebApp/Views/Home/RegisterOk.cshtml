@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "RegisterOk";
+}
+<link href="~/Content/Login-RegisterStyyle.css" rel="stylesheet" />
+<div class="logreg">
+    <main class="form-signin">
+        <form>
+            <img class="mb-4" src="~/images/login (1).png" alt="" width="150" height="120">
+            <h1 class="h3 mb-3 fw-normal">İşlem Tamamlandı...</h1>
+            <div class="text-success">
+                <h2>
+                    <span>Kayıt oldunuz.</span>
+                </h2>
+                <hr />
+                <p class="text-justify">Lütfen mailine gönderilen aktivasyon linkine tıklayarak hesabınızı aktif ediniz.</p>
+            </div>
+        </form>
+    </main>
+</div>
+
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("header").hide();
+        $(".footer1").hide();
+        $("#category1").hide();
+        $("#category2").addClass("col-md-12").removeClass("col-md-10");
+
+        setTimeout(function () {
+            window.location = "/Home/Index";
+        },3000);
+    });
+</script>
+

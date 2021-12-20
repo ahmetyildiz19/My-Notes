@@ -1,5 +1,6 @@
 ﻿using Notlarim102.BusinessLayer;
 using Notlarim102.Entity;
+using Notlarim102.WebApp.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +58,63 @@ namespace Notlarim102.WebApp.Controllers
             return View("Index", nm.GetAllNotes().OrderByDescending(x => x.LikeCount).ToList());
         }
 
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Login(LoginViewModel model)
+        {
+            return View();
+        }
+        public ActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Register(RegisterViewModel model)
+        {
+            //kullanici adinin uygunlugu
+            //email kontrolu
+            //activasyon islemi
+            //bool hasError = false;
+            if (ModelState.IsValid)
+            {
+                if (model.Username == "aaa")
+                {
+                    ModelState.AddModelError("", "Bu kullanıcı adı uygun değil.");
+                    //hasError = true;
+                }
+                if (model.Email == "aaa@aaa.com")
+                {
+                    ModelState.AddModelError("", "Bu Email adresi daha önce kullanılmıştır.");
+                    //hasError = true;
+                }
+                // if (hasError == true)
+                // {
+                //     return View(model);
+                // }
+                // else
+                // {
+                //     return RedirectToAction("RegisterOk");
+                // }
 
+                foreach (var item in ModelState)
+                {
+                    if (item.Value.Errors.Count>0)
+                    {
+                        return View(model);
+                    }
+                }
+                return RedirectToAction("RegisterOk");
+
+
+            }
+            return View();
+        }
+        public ActionResult RegisterOk()
+        {
+            return View();
+        }
     }
 }
