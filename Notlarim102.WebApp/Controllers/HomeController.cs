@@ -1,6 +1,6 @@
 ﻿using Notlarim102.BusinessLayer;
 using Notlarim102.Entity;
-using Notlarim102.WebApp.ViewModel;
+using Notlarim102.Entity.ValueObject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +47,7 @@ namespace Notlarim102.WebApp.Controllers
             {
                 return HttpNotFound(); //id bulunmazsa bu yazdığımız kod sayfada hata olarak gözükecektir.
             }
-            //TempData["mm"] = cat.Notes;//bu yaptığımız tempdata ile sayfamıza taşıyacak yukarıda yaptıklarımı.(bu veriyi home controllere taşıdım.)
+            ////TempData["mm"] = cat.Notes;//bu yaptığımız tempdata ile sayfamıza taşıyacak yukarıda yaptıklarımı.(bu veriyi home controllere taşıdım.)
             return View("Index", cat.Notes.OrderByDescending(x => x.ModifiedOn).ToList());
         }
 
@@ -65,7 +65,20 @@ namespace Notlarim102.WebApp.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                NotlarimUserManager num = new NotlarimUserManager();
+                BusinessLayerResult<NotlarimUser> res = num.LoginUser(model);
+                if (res.Errors.Count>0)
+                {
+                    res.Errors.ForEach(s => ModelState.AddModelError("", s));
+                    return View(model);
+                }
+                //yonlendirme
+                Session["Login"] = res.Result;//session a kullanici bilgilerini gonderme.
+                return RedirectToAction("Index");//yonlendirme
+            }
+                return View();
         }
         public ActionResult Register()
         {
@@ -80,16 +93,40 @@ namespace Notlarim102.WebApp.Controllers
             //bool hasError = false;
             if (ModelState.IsValid)
             {
-                if (model.Username == "aaa")
+                NotlarimUserManager num = new NotlarimUserManager();
+                BusinessLayerResult<NotlarimUser> res = num.RegisterUser(model);
+
+                if (res.Errors.Count>0)
                 {
-                    ModelState.AddModelError("", "Bu kullanıcı adı uygun değil.");
-                    //hasError = true;
+                    res.Errors.ForEach(s=>ModelState.AddModelError("",s));
+                    return View(model);
                 }
-                if (model.Email == "aaa@aaa.com")
-                {
-                    ModelState.AddModelError("", "Bu Email adresi daha önce kullanılmıştır.");
-                    //hasError = true;
-                }
+
+
+
+
+
+
+                //NotlarimUser user = null;
+                //try
+                //{
+                //    user = num.RegisterUser(model);
+                //}
+                //catch (Exception ex)
+                //{
+                //    ModelState.AddModelError("", ex.Message);
+                //}
+
+                //if (model.Username == "aaa")
+                //{
+                //    ModelState.AddModelError("", "Bu kullanıcı adı uygun değil.");
+                //    //hasError = true;
+                //}
+                //if (model.Email == "aaa@aaa.com")
+                //{
+                //    ModelState.AddModelError("", "Bu Email adresi daha önce kullanılmıştır.");
+                //    //hasError = true;
+                //}
                 // if (hasError == true)
                 // {
                 //     return View(model);
@@ -99,16 +136,14 @@ namespace Notlarim102.WebApp.Controllers
                 //     return RedirectToAction("RegisterOk");
                 // }
 
-                foreach (var item in ModelState)
-                {
-                    if (item.Value.Errors.Count>0)
-                    {
-                        return View(model);
-                    }
-                }
+                //foreach (var item in ModelState)
+                //{
+                //    if (item.Value.Errors.Count > 0)
+                //    {
+                //        return View(model);
+                //    }
+                //}
                 return RedirectToAction("RegisterOk");
-
-
             }
             return View();
         }
