@@ -17,9 +17,9 @@ namespace Notlarim102.BusinessLayer
             return rnote.List();
         }
 
-        public object GetAllNoteQueryable()
+        public IQueryable<Note> GetAllNoteQueryable()
         {
-            return rnote.ListQueryable();
+            return rnote.listQueryable();
         }
     }
 }

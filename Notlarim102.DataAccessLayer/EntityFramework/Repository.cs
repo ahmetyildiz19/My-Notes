@@ -1,5 +1,7 @@
-﻿using Notlarim102.DataAccessLayer;
+﻿using Notlarim102.Common;
+using Notlarim102.DataAccessLayer;
 using Notlarim102.DataAccessLayer.Abstract;
+using Notlarim102.Entity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -34,11 +36,27 @@ namespace Notlarim102.DataAccessLayer.EntityFramework
         public int Insert(T obj)
         {
             objSet.Add(obj);
+            //NotlarimUser user =new NotlarimUser(obj) olmadi
+            if (obj is MyEntityBase)
+            {
+                MyEntityBase o = obj as MyEntityBase;
+                DateTime now = DateTime.Now;
+                o.CreatedOn = now;
+                o.ModifiedOn = now;
+                o.ModifiedUserName = App.Common.GetCurrentUsername();
+                //  o.ModifiedUserName = "system";
+            }
             return Save();
         }
 
         public int Update(T obj)
         {
+            if (obj is MyEntityBase)
+            {
+                MyEntityBase o = obj as MyEntityBase;
+                o.ModifiedOn = DateTime.Now;
+                o.ModifiedUserName = App.Common.GetCurrentUsername();
+            }
             return Save();
         }
 
@@ -57,6 +75,11 @@ namespace Notlarim102.DataAccessLayer.EntityFramework
         public T Find(Expression<Func<T, bool>> eresult)
         {
             return objSet.FirstOrDefault(eresult);
+        }
+
+        public IQueryable<T> listQueryable()
+        {
+            return objSet.AsQueryable<T>();
         }
 
         public IQueryable<T> ListQueryable()

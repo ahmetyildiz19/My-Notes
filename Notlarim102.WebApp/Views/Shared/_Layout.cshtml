@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Notlarim102.Entity
+
+<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="utf-8" />
@@ -15,6 +17,21 @@
     <link href="~/Content/styles.css" rel="stylesheet" />
 </head>
 <body>
+    @{
+        NotlarimUser user = null;
+        if (Session["login"] != null)
+        {
+            user = Session["login"] as NotlarimUser;
+        }
+    }
+
+
+
+
+
+
+
+
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container px-1 px-lg-2">
@@ -22,7 +39,11 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!"><i class="fas fa-wrench"></i> Yönetim</a></li>
+                    @if (user != null)
+                    {
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!"><i class="fas fa-wrench"></i> Yönetim</a></li>
+                    }
+
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="/Home/MostLiked"><i class="far fa-star"></i> En Beğenilenler</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Home/Index"><i class="far fa-edit"></i> Son Yazılar</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Home/About"><i class="fas fa-exclamation-circle"></i> Hakkımızda</a></li>
@@ -44,10 +65,16 @@
                         </button>
                     </form>*@
                 <ul class="navbar-nav mb-2 mb-lg-0 ms-lg-4">
-                    <li class="nav-item"><a href="" class="nav-link active"><i class="fas fa-sign-in-alt"></i> Giriş</a></li>
-                    <li class="nav-item"><a href="" class="nav-link active"><i class="fas fa-user-plus"></i> Üye Ol</a></li>
-                    <li class="nav-item"><a href="" class="nav-link active"><i class="fas fa-user-check"></i> Ahmet Yıldız</a></li>
-                    <li class="nav-item"><a href="" class="nav-link active"><i class="fas fa-sign-in-alt"></i> Çıkış </a></li>
+                    @if (user == null)
+                    {
+                        <li class="nav-item"><a href="/Home/Login" class="nav-link active"><i class="fas fa-sign-in-alt"></i> Giriş</a></li>
+                        <li class="nav-item"><a href="/Home/Register" class="nav-link active"><i class="fas fa-user-plus"></i> Üye Ol</a></li>
+                    }
+                    else
+                    {
+                        <li class="nav-item"><a href="/Home/ShowProfile" class="nav-link active"><i class="fas fa-user-check"></i> Ahmet Yıldız</a></li>
+                        <li class="nav-item"><a href="/Home/Logout" class="nav-link active"><i class="fas fa-sign-in-alt"></i> Çıkış </a></li>
+                    }
                 </ul>
             </div>
         </div>
@@ -74,11 +101,13 @@
 
     </div>
     <!-- Footer-->
-    @RenderSection("footer", required: false)
+    @*@RenderSection("footer", required: false)*@
+    @*@RenderSection("footer",required:true)*@
     @Html.Partial("_PartialFooter")
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
+    @*<script src="js/scripts.js"></script>*@
     <script src="~/Scripts/scripts.js"></script>
 </body>
 </html>

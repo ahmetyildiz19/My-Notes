@@ -41,7 +41,7 @@ namespace Notlarim102.BusinessLayer
                 Password="123",
                 CreatedOn=DateTime.Now,
                 ModifiedOn=DateTime.Now,
-                ModifiedUsername="usernameee"
+                ModifiedUserName="usernameee"
             });
         }
 
@@ -77,7 +77,7 @@ namespace Notlarim102.BusinessLayer
                 Text = "Bu bir test datasıdır.",
                 CreatedOn=DateTime.Now,
                 ModifiedOn=DateTime.Now,
-                ModifiedUsername="ahmetyildiz",
+                ModifiedUserName="ahmetyildiz",
                 Note= note,
                 Owner= user,
             };

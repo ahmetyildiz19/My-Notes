@@ -117,7 +117,7 @@
     <Content Include="images\78-785917_user-login-function-name-avatar-user-icon-hd.png" />
     <Content Include="images\icon-256x256.png" />
     <Content Include="images\login %281%29.png" />
-    <Content Include="images\login.png" />
+    <Content Include="images\User1.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -162,20 +162,33 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Init\WebCommon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\ErrorViewModel.cs" />
+    <Compile Include="ViewModel\InfoViewModel.cs" />
+    <Compile Include="ViewModel\NotifyViewModelBase.cs" />
+    <Compile Include="ViewModel\OkViewModel.cs" />
+    <Compile Include="ViewModel\WarningViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.6.0.min.map" />
     <Content Include="Views\Shared\_PartialCategories.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\RegisterOk.cshtml" />
+    <Content Include="Views\Home\UserActiveteOk.cshtml" />
+    <Content Include="Views\Home\UserActiveteCancel.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Ok.cshtml" />
+    <Content Include="Views\Shared\Warning.cshtml" />
+    <Content Include="Views\Shared\Info.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Home\ShowProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -186,13 +199,16 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="ViewModel\" />
     <Folder Include="Views\Category\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Notlarim102.BusinessLayer\Notlarim102.BusinessLayer.csproj">
       <Project>{d29c7405-bbc2-484b-a9ce-e861be5c6f42}</Project>
       <Name>Notlarim102.BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Notlarim102.Common1\Notlarim102.Common1.csproj">
+      <Project>{26c92cb9-6718-48ae-932f-c630ff15cfa2}</Project>
+      <Name>Notlarim102.Common1</Name>
     </ProjectReference>
     <ProjectReference Include="..\Notlarim102.Entity\Notlarim102.Entity.csproj">
       <Project>{0d8b601b-d95c-4ce0-b3ad-079a1e50f0b8}</Project>

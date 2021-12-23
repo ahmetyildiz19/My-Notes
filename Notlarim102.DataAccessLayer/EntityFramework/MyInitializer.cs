@@ -23,9 +23,10 @@ namespace Notlarim102.DataAccessLayer.EntityFramework
                 IsAdmin = true,
                 Username = "ahmetyildiz",
                 Password = "123456",
+                ProfileImageFilename="User1.jpg",
                 CreatedOn = DateTime.Now,
                 ModifiedOn = DateTime.Now,
-                ModifiedUsername = "ahmetyildiz"
+                ModifiedUserName = "ahmetyildiz"
             };
             //Adding Standart user
             NotlarimUser standartUser = new NotlarimUser()
@@ -38,9 +39,10 @@ namespace Notlarim102.DataAccessLayer.EntityFramework
                 IsAdmin = true,
                 Username = "sareyildiz",
                 Password = "123456",
+                ProfileImageFilename = "User1.jpg",
                 CreatedOn = DateTime.Now,
                 ModifiedOn = DateTime.Now,
-                ModifiedUsername = "sareyildiz"
+                ModifiedUserName = "sareyildiz"
             };
             context.NotlarimUsers.Add(admin);
             context.NotlarimUsers.Add(standartUser);
@@ -57,9 +59,10 @@ namespace Notlarim102.DataAccessLayer.EntityFramework
                     IsAdmin = false,
                     Username = $"user-{i}",
                     Password = "123",
+                    ProfileImageFilename = "User1.jpg",
                     CreatedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now),
                     ModifiedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now),
-                    ModifiedUsername = $"user-{i}"
+                    ModifiedUserName = $"user-{i}"
                 };
                 context.NotlarimUsers.Add(user);
             }
@@ -78,7 +81,7 @@ namespace Notlarim102.DataAccessLayer.EntityFramework
                     Description = FakeData.PlaceData.GetAddress(),
                     CreatedOn = DateTime.Now,
                     ModifiedOn = DateTime.Now,
-                    ModifiedUsername = "ahmetyildiz"
+                    ModifiedUserName = "ahmetyildiz"
                 };
                 context.Categories.Add(cat);
                 //Adding fake Notes..
@@ -94,7 +97,7 @@ namespace Notlarim102.DataAccessLayer.EntityFramework
                         Owner = owner,
                         CreatedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now),
                         ModifiedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now),
-                        ModifiedUsername = owner.Username
+                        ModifiedUserName = owner.Username
                     };
                     cat.Notes.Add(note);
                     //Adding fake comments
@@ -107,7 +110,7 @@ namespace Notlarim102.DataAccessLayer.EntityFramework
                             Owner = comment_owner,
                             CreatedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now),
                             ModifiedOn = FakeData.DateTimeData.GetDatetime(DateTime.Now.AddYears(-1), DateTime.Now),
-                            ModifiedUsername = comment_owner.Username
+                            ModifiedUserName = comment_owner.Username
                         };
                         note.Comments.Add(comment);
                     }

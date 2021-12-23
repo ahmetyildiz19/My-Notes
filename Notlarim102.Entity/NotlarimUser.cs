@@ -17,17 +17,21 @@ namespace Notlarim102.Entity
         public string Surname { get; set; }
         [StringLength(30)]
         public string Username { get; set; }
-        [StringLength(100),Required]
+        [StringLength(100), Required]
         public string Email { get; set; }
         [StringLength(100), Required]
         public string Password { get; set; }
+        [StringLength(30)]
+        public string ProfileImageFilename { get; set; }
+
         public bool IsActive { get; set; }
         [Required]
-        public Guid ActivateGuid { get; set; }
+        public Guid ActivateGuid { get; set; } //globaluserid 16 haneli benzersiz bir kod cikariyor
         public bool IsAdmin { get; set; }
 
-        public List<Note> Notes { get; set; }
-        public List<Comment> Comments { get; set; }
-        public List<Liked> likes { get; set; }
+        public virtual List<Note> Notes { get; set; } //bir kullanicinin birden cok notu olabilir
+        public virtual List<Comment> Comments { get; set; } //bir kullanicinin birden cok yorumu olabilir
+        public virtual List<Liked> Likes { get; set; } //bir kullanicinin birden cok begenisi olabilir
+
     }
 }

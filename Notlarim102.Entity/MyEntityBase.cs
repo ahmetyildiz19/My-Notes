@@ -16,7 +16,7 @@ namespace Notlarim102.Entity
         public DateTime CreatedOn { get; set; }
         [Required]
         public DateTime ModifiedOn { get; set; }
-        [Required,StringLength(30)]
-        public string ModifiedUsername { get; set; }
+        [Required, StringLength(30)]
+        public string ModifiedUserName { get; set; }
     }
 }
