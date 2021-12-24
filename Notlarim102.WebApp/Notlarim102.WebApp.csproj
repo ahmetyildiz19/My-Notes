@@ -113,6 +113,7 @@
     <Content Include="Content\Login-RegisterStyyle.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\styles.css" />
+    <Content Include="Content\ValidationStyle.css" />
     <Content Include="Global.asax" />
     <Content Include="images\78-785917_user-login-function-name-avatar-user-icon-hd.png" />
     <Content Include="images\icon-256x256.png" />
@@ -189,6 +190,7 @@
     <Content Include="Views\Shared\Info.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Home\ShowProfile.cshtml" />
+    <Content Include="Views\Home\EditProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

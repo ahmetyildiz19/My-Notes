@@ -50,7 +50,7 @@ namespace Notlarim102.BusinessLayer
                     ActivateGuid = Guid.NewGuid(),
                     IsActive = false,
                     IsAdmin = false,
-                    ProfileImageFilename="user1.jpg"
+                    ProfileImageFilename = "user1.jpg"
                     //kapatilanlar repositoryde otomatik eklencek sekilde duzenlenecektir
                     //ModifiedOn = now,
                     //CreatdOn = now,
@@ -97,7 +97,7 @@ namespace Notlarim102.BusinessLayer
             return res;
         }
 
-        public BusinessLayerResult<NotlarimUser> ActiveUser(Guid id)
+        public BusinessLayerResult<NotlarimUser> ActivateUser(Guid id)
         {
             BusinessLayerResult<NotlarimUser> res = new BusinessLayerResult<NotlarimUser>();
             res.Result = ruser.Find(x => x.ActivateGuid == id);
@@ -122,8 +122,8 @@ namespace Notlarim102.BusinessLayer
         {
             BusinessLayerResult<NotlarimUser> res = new
                 BusinessLayerResult<NotlarimUser>();
-            res.Result = ruser.Find(s=>s.Id == id);
-            if (res.Result==null)
+            res.Result = ruser.Find(s => s.Id == id);
+            if (res.Result == null)
             {
                 res.AddError
                     (ErrorMessageCode.UserNotFound, "Kullanıcı Bulunamadı.");
@@ -131,6 +131,57 @@ namespace Notlarim102.BusinessLayer
             return res;
         }
 
+        public BusinessLayerResult<NotlarimUser> UpdateProfile(NotlarimUser data)
+        {
+            NotlarimUser user = ruser.Find(x => x.Id != data.Id && (x.Username == data.Username || x.Email == data.Email));
+            BusinessLayerResult<NotlarimUser> res = new BusinessLayerResult<NotlarimUser>();
+            if (user != null && user.Id != data.Id)
+            {
+                if (user.Username == data.Username)
+                {
+                    res.AddError(ErrorMessageCode.UsernameAlreadyExist, "Bu kullanıcı adı daha önce alınmış.");
+                }
+                if (user.Email == data.Email)
+                {
+                    res.AddError(ErrorMessageCode.EmailAlreadyExist, "Bu E-Posta daha önce alınmış.");
+                }
+                return res;
+            }
 
+            res.Result = ruser.Find(s => s.Id == data.Id);
+            res.Result.Email = data.Email;
+            res.Result.Name = data.Name;
+            res.Result.Surname = data.Surname;
+            res.Result.Password = data.Password;
+            res.Result.Username = data.Username;
+            if (string.IsNullOrEmpty(data.ProfileImageFilename) == false)
+            {
+                res.Result.ProfileImageFilename = data.ProfileImageFilename;
+            }
+            if (ruser.Update(res.Result) == 0)
+            {
+                res.AddError(ErrorMessageCode.ProfileCouldNotUpdate, "Profil Güncellenemedi.");
+            }
+            return res;
+        }
+
+        public BusinessLayerResult<NotlarimUser> DeleteProfile(int id)
+        {
+            NotlarimUser user = ruser.Find(x => x.Id == id);
+            BusinessLayerResult<NotlarimUser> res = new BusinessLayerResult<NotlarimUser>();
+
+            if (user != null)
+            {
+                if (ruser.Delete(user) == 0)
+                {
+                    res.AddError(ErrorMessageCode.UserCouldNotRemove, "Kullanıcı Silinemedi...");
+                }
+            }
+            else
+            {
+                res.AddError(ErrorMessageCode.UserCouldNotFind, "Kullanıcı Bulunamadı.");
+            }
+            return res;
+        }
     }
 }

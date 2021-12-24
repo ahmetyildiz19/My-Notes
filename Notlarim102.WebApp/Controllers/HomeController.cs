@@ -160,15 +160,17 @@ namespace Notlarim102.WebApp.Controllers
 
             return View(model);
         }
+
         public ActionResult RegisterOk()
         {
             return View();
         }
 
-        public ActionResult UserActivete(Guid id)
+        public ActionResult UserActivate(Guid id)
         {
             NotlarimUserManager num = new NotlarimUserManager();
-            BusinessLayerResult<NotlarimUser> res = num.ActiveUser(id);
+            BusinessLayerResult<NotlarimUser> res = num.ActivateUser(id);
+
             if (res.Errors.Count > 0)
             {
                 ErrorViewModel errorNotifyObj = new ErrorViewModel()
@@ -180,12 +182,14 @@ namespace Notlarim102.WebApp.Controllers
                 //TempData["errors"] = res.Errors;
                 //return RedirectToAction("UserActivateCancel");
             }
+            return View();
         }
 
         public ActionResult UserActiveteOk()
         {
             return View();
         }
+
         public ActionResult UserActiveteCancel()
         {
             List<ErrorMessageObject> errors = null;
@@ -195,7 +199,6 @@ namespace Notlarim102.WebApp.Controllers
             }
             return View(errors);
         }
-
 
         public ActionResult ShowProfile()
         {
@@ -207,9 +210,9 @@ namespace Notlarim102.WebApp.Controllers
                 ErrorViewModel errorNotifyObj = new ErrorViewModel()
                 {
                     Title = "Geçersiz profil işlemi.",
-                    RedirectingUrl = "/Home/Login"
+                    Items = res.Errors
+                    //RedirectingUrl = "/Home/Login"
                 };
-                errorNotifyObj.Items.Add("Geçersiz aktivasyon işlemi.");
                 return View("Error", errorNotifyObj);
                 //Kullaniciya ait bir hata ekranina yönlendiricegim.
             }
@@ -218,24 +221,77 @@ namespace Notlarim102.WebApp.Controllers
 
         public ActionResult EditProfile()
         {
-            return View();
+            NotlarimUser currentUser = Session["login"] as NotlarimUser;
+            NotlarimUserManager num = new NotlarimUserManager();
+            BusinessLayerResult<NotlarimUser> res = num.GetUserById(currentUser.Id);
+            if (res.Errors.Count > 0)
+            {
+                ErrorViewModel errorNotifyObj = new ErrorViewModel()
+                {
+                    Title = "Hata oluştu",
+                    Items = res.Errors
+                };
+                return View("Error", errorNotifyObj);
+            }
+            return View(res.Result);
         }
-
-        public ActionResult EditProfile(int id)
+        [HttpPost]
+        public ActionResult EditProfile(NotlarimUser model, HttpPostedFileBase ProfileImage)
         {
-            return View();
+            ModelState.Remove("ModifiedUsername");
+            if (ModelState.IsValid)
+            {
+                if (ProfileImage != null && (ProfileImage.ContentType == "image/jpeg" || ProfileImage.ContentType == "image/jpg" || ProfileImage.ContentType == "image/png"))
+                {
+                    string filename = $"user_{model.Id}.{ProfileImage.ContentType.Split('/')[1]}";
+                    //user_5.png
+                    ProfileImage.SaveAs(Server.MapPath($"~/images/{filename}"));
+                    model.ProfileImageFilename = filename;
+                }
+                NotlarimUserManager num = new NotlarimUserManager();
+                BusinessLayerResult<NotlarimUser> res = num.UpdateProfile(model);
+                if (res.Errors.Count > 0)
+                {
+                    ErrorViewModel errorNotifyObj = new ErrorViewModel()
+                    {
+                        Title = "Hata oluştu",
+                        Items = res.Errors
+                    };
+                    return View("Error", errorNotifyObj);
+                }
+                Session["login"] = res.Result;
+                return RedirectToAction("ShowProfile");
+
+            }
+
+
+            return View(model);
         }
 
         public ActionResult DeleteProfile()
         {
-            return View();
+            NotlarimUser currentUser = Session["login"] as NotlarimUser;
+            NotlarimUserManager num = new NotlarimUserManager();
+            BusinessLayerResult<NotlarimUser> res = num.DeleteProfile(currentUser.Id);
+            if (res.Errors.Count > 0)
+            {
+                ErrorViewModel errorNotifyObj = new ErrorViewModel()
+                {
+                    Title = "Hata oluştu",
+                    Items = res.Errors
+                };
+                return View("Error", errorNotifyObj);
+            }
+            Session.Clear();
+            return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public ActionResult DeleteProfile(int id)
-        {
-            return View();
-        }
+        //[HttpPost]
+        //public ActionResult DeleteProfile(int id)
+        //{
+        //    return View();
+        //}
+
         public ActionResult Logout()
         {
             Session.Clear();

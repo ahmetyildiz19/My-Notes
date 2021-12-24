@@ -41,21 +41,33 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                     @if (user != null)
                     {
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!"><i class="fas fa-wrench"></i> Yönetim</a></li>
+                        @*<li class="nav-item"><a class="nav-link active" aria-current="page" href="#!"><i class="fas fa-wrench"></i> Yönetim</a></li>*@
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle active" id="navbarDropdown" href="/Note/Mynotes" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-wrench"></i> Yönetim</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/Note/Create">Not Ekle</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="/Note/Index">Notlarım</a></li>
+                                <li><a class="dropdown-item" href="/Note/MyLikedNotes">Beğendiklerim</a></li>
+                                @if (user.IsAdmin == true)
+                                {
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li><a class="dropdown-item" href="/Category/Create">Kategori Ekle</a></li>
+                                    <li><a class="dropdown-item" href="/Category/Index">Kategoriler</a></li>
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li><a class="dropdown-item" href="/NotlarimUser/Create">Kullanıcı Ekle</a></li>
+                                    <li><a class="dropdown-item" href="/NotlarimUser/Index">Kullanıcılar</a></li>
+                                }
+                            </ul>
+                        </li>
+
                     }
 
                     <li class="nav-item"><a class="nav-link active" aria-current="page" href="/Home/MostLiked"><i class="far fa-star"></i> En Beğenilenler</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Home/Index"><i class="far fa-edit"></i> Son Yazılar</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Home/About"><i class="fas fa-exclamation-circle"></i> Hakkımızda</a></li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-shopping-cart"></i> Shop</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="#!">All Products</a></li>
-                            <li><hr class="dropdown-divider" /></li>
-                            <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                            <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                        </ul>
-                    </li>
+
                 </ul>
                 @*<form class="d-flex">
                         <button class="btn btn-outline-dark" type="submit">
@@ -72,10 +84,25 @@
                     }
                     else
                     {
-                        <li class="nav-item"><a href="/Home/ShowProfile" class="nav-link active"><i class="fas fa-user-check"></i> Ahmet Yıldız</a></li>
-                        <li class="nav-item"><a href="/Home/Logout" class="nav-link active"><i class="fas fa-sign-in-alt"></i> Çıkış </a></li>
+                        @*<li class="nav-item"><a href="/Home/ShowProfile" class="nav-link active"><i class="fas fa-user-check"></i> @user.Username</a></li>*@
+
+                        <li class="nav-item dropdown active">
+                            <a class="nav-link dropdown-toggle active" id="navbarDropdown" href="/Home/ShowProfile" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user-check"></i> @user.Username</a>
+                            <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/Home/ShowProfile">Profili Göster</a></li>
+                                <li><hr class="dropdown-divider active" /></li>
+                                <li><a class="dropdown-item" href="/Home/EditProfile">Profili Düzenle</a></li>
+                                <li><a class="dropdown-item" href="/Home/DeleteProfile" onclick="return confirm('Are you sure remove this account?');">Profili Sil</a></li>
+
+
+                                <li class="nav-item">
+                                    <a href="/Home/Logout" class="nav-link active"><i class="fas fa-sign-in-alt"></i> Çıkış </a>
+
+                                </li>
+
+                            </ul>
+                        </li>
                     }
-                </ul>
             </div>
         </div>
     </nav>
