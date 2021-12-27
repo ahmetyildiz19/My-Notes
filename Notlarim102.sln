@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notlarim102.Entity", "Notla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notlarim102.Common1", "Notlarim102.Common1\Notlarim102.Common1.csproj", "{26C92CB9-6718-48AE-932F-C630FF15CFA2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notlarim102.Core", "Notlarim102.Core\Notlarim102.Core.csproj", "{46224A2E-9614-431B-A597-979CB4D30DDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{26C92CB9-6718-48AE-932F-C630FF15CFA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26C92CB9-6718-48AE-932F-C630FF15CFA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26C92CB9-6718-48AE-932F-C630FF15CFA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46224A2E-9614-431B-A597-979CB4D30DDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46224A2E-9614-431B-A597-979CB4D30DDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46224A2E-9614-431B-A597-979CB4D30DDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46224A2E-9614-431B-A597-979CB4D30DDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

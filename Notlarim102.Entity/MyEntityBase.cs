@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -12,11 +13,11 @@ namespace Notlarim102.Entity
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required]
+        [DisplayName("Oluşturma Tarihi"),Required]
         public DateTime CreatedOn { get; set; }
-        [Required]
+        [DisplayName("Değiştirme Tarihi"),Required]
         public DateTime ModifiedOn { get; set; }
-        [Required, StringLength(30)]
+        [DisplayName("Düzenleyen"),Required, StringLength(30)]
         public string ModifiedUserName { get; set; }
     }
 }

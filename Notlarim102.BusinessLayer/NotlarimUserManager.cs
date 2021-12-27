@@ -1,4 +1,5 @@
-﻿using Notlarim102.Common.Helper;
+﻿using Notlarim102.BusinessLayer.Abstract;
+using Notlarim102.Common.Helper;
 using Notlarim102.DataAccessLayer.EntityFramework;
 using Notlarim102.Entity;
 using Notlarim102.Entity.Messages;
@@ -11,26 +12,26 @@ using System.Threading.Tasks;
 
 namespace Notlarim102.BusinessLayer
 {
-    public class NotlarimUserManager
+    public class NotlarimUserManager : ManagerBase<NotlarimUser>
     {
-        private Repository<NotlarimUser> ruser = new Repository<NotlarimUser>();
 
+        readonly BusinessLayerResult<NotlarimUser> res = new BusinessLayerResult<NotlarimUser>();
         //home cont. yaptigimiz hata gosterme islemini burada yapacagiz.
         //database ile karsilastircaz
         public BusinessLayerResult<NotlarimUser> RegisterUser(RegisterViewModel data)
         {
-            NotlarimUser user = ruser.Find(s => s.Username == data.Username || s.Email == data.Email);
+            NotlarimUser user = Find(s => s.Username == data.Username || s.Email == data.Email);
 
-            BusinessLayerResult<NotlarimUser> layerResult = new BusinessLayerResult<NotlarimUser>();
+
             if (user != null)
             {
                 if (user.Username == data.Username)
                 {
-                    layerResult.AddError(ErrorMessageCode.UsernameAlreadyExist, "Kullanici adi daha once kaydedilmis");
+                    res.AddError(ErrorMessageCode.UsernameAlreadyExist, "Kullanici adi daha once kaydedilmis");
                 }
                 if (user.Email == data.Email) //else diyemeyiz cunku biri digerinin on kosulu degil
                 {
-                    layerResult.AddError(ErrorMessageCode.EmailAlreadyExist, "Email daha once kullanilmis");
+                    res.AddError(ErrorMessageCode.EmailAlreadyExist, "Email daha once kullanilmis");
                 }
 
                 //hata firlatma teknigini kullanabiliriz.
@@ -42,7 +43,7 @@ namespace Notlarim102.BusinessLayer
             else
             {
                 DateTime now = DateTime.Now;
-                int dbResult = ruser.Insert(new NotlarimUser()
+                int dbResult = Insert(new NotlarimUser()
                 {
                     Username = data.Username,
                     Email = data.Email,
@@ -58,16 +59,16 @@ namespace Notlarim102.BusinessLayer
                 });
                 if (dbResult > 0)
                 {
-                    layerResult.Result = ruser.Find(s => s.Email == data.Email && s.Username == data.Username);
+                    res.Result = Find(s => s.Email == data.Email && s.Username == data.Username);
 
                     string siteUri = ConfigHelper.Get<string>("SiteRootUri");
-                    string activeUri = $"{siteUri}/Home/UserActivete/{layerResult.Result.ActivateGuid}";
-                    string body = $"Merhaba {layerResult.Result.Username};<br><br> Hesabinizi aktiflestirmek icin <a href='{activeUri}' target='_blank'> Tiklayiniz </a>.";
-                    MailHelper.SendMail(body, layerResult.Result.Email, "Notlarim102 hesap aktiflestirme");
+                    string activeUri = $"{siteUri}/Home/UserActivete/{res.Result.ActivateGuid}";
+                    string body = $"Merhaba {res.Result.Username};<br><br> Hesabinizi aktiflestirmek icin <a href='{activeUri}' target='_blank'> Tiklayiniz </a>.";
+                    MailHelper.SendMail(body, res.Result.Email, "Notlarim102 hesap aktiflestirme");
 
                 }
             }
-            return layerResult;
+            return res;
         }
 
         public BusinessLayerResult<NotlarimUser> LoginUser(LoginViewModel data)
@@ -79,8 +80,8 @@ namespace Notlarim102.BusinessLayer
             //yonlendirme
             //session a kullanici bilgilerini gonderme 
 
-            BusinessLayerResult<NotlarimUser> res = new BusinessLayerResult<NotlarimUser>();
-            res.Result = ruser.Find(s => s.Username == data.Username && s.Password == data.Password);
+
+            res.Result = Find(s => s.Username == data.Username && s.Password == data.Password);
 
             if (res.Result != null)
             {
@@ -99,8 +100,8 @@ namespace Notlarim102.BusinessLayer
 
         public BusinessLayerResult<NotlarimUser> ActivateUser(Guid id)
         {
-            BusinessLayerResult<NotlarimUser> res = new BusinessLayerResult<NotlarimUser>();
-            res.Result = ruser.Find(x => x.ActivateGuid == id);
+
+            res.Result = Find(x => x.ActivateGuid == id);
             if (res.Result != null)
             {
                 if (res.Result.IsActive)
@@ -109,7 +110,7 @@ namespace Notlarim102.BusinessLayer
                     return res;
                 }
                 res.Result.IsActive = true;
-                ruser.Update(res.Result);
+                Update(res.Result);
             }
             else
             {
@@ -122,7 +123,7 @@ namespace Notlarim102.BusinessLayer
         {
             BusinessLayerResult<NotlarimUser> res = new
                 BusinessLayerResult<NotlarimUser>();
-            res.Result = ruser.Find(s => s.Id == id);
+            res.Result = Find(s => s.Id == id);
             if (res.Result == null)
             {
                 res.AddError
@@ -133,8 +134,8 @@ namespace Notlarim102.BusinessLayer
 
         public BusinessLayerResult<NotlarimUser> UpdateProfile(NotlarimUser data)
         {
-            NotlarimUser user = ruser.Find(x => x.Id != data.Id && (x.Username == data.Username || x.Email == data.Email));
-            BusinessLayerResult<NotlarimUser> res = new BusinessLayerResult<NotlarimUser>();
+            NotlarimUser user = Find(x => x.Id != data.Id && (x.Username == data.Username || x.Email == data.Email));
+
             if (user != null && user.Id != data.Id)
             {
                 if (user.Username == data.Username)
@@ -148,7 +149,7 @@ namespace Notlarim102.BusinessLayer
                 return res;
             }
 
-            res.Result = ruser.Find(s => s.Id == data.Id);
+            res.Result = Find(s => s.Id == data.Id);
             res.Result.Email = data.Email;
             res.Result.Name = data.Name;
             res.Result.Surname = data.Surname;
@@ -158,7 +159,7 @@ namespace Notlarim102.BusinessLayer
             {
                 res.Result.ProfileImageFilename = data.ProfileImageFilename;
             }
-            if (ruser.Update(res.Result) == 0)
+            if (Update(res.Result) == 0)
             {
                 res.AddError(ErrorMessageCode.ProfileCouldNotUpdate, "Profil Güncellenemedi.");
             }
@@ -167,12 +168,12 @@ namespace Notlarim102.BusinessLayer
 
         public BusinessLayerResult<NotlarimUser> DeleteProfile(int id)
         {
-            NotlarimUser user = ruser.Find(x => x.Id == id);
-            BusinessLayerResult<NotlarimUser> res = new BusinessLayerResult<NotlarimUser>();
+            NotlarimUser user = Find(x => x.Id == id);
+
 
             if (user != null)
             {
-                if (ruser.Delete(user) == 0)
+                if (Delete(user) == 0)
                 {
                     res.AddError(ErrorMessageCode.UserCouldNotRemove, "Kullanıcı Silinemedi...");
                 }

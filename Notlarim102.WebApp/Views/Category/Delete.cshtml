@@ -1,0 +1,63 @@
+﻿@model Notlarim102.Entity.Category
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<br />  
+<h3>Silmek istediğine eminmisiniz?</h3>
+<div>
+    <h4>Sil İşlemi</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ModifiedUserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ModifiedUserName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+<div class="form-actions no-color">
+    <input type="submit" value="Sil" class="btn btn-danger" /> 
+    @Html.ActionLink("Listeye Git", "Index", null, new { @class = "btn btn-outline-primary" })
+</div>
+    }
+</div>
