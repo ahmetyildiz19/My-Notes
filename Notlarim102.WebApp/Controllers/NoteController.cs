@@ -16,6 +16,7 @@ namespace Notlarim102.WebApp.Controllers
     {
         private NoteManager nm = new NoteManager();
         CategoryManager cm = new CategoryManager();
+        LikedManager lm = new LikedManager();
 
         public ActionResult Index()
         {
@@ -27,6 +28,13 @@ namespace Notlarim102.WebApp.Controllers
 
 
             return View(notes.ToList());
+        }
+
+        public ActionResult MyLikedNotes()
+        {
+            var notes = lm.QList().Include("LikedUser").Include("Note").Where(s => s.LikedUser.Id == CurrentSession.User.Id).Select(s => s.Note).Include("Category").Include("Owner").OrderByDescending(x => x.ModifiedOn);
+
+            return View("Index", notes.ToList());
         }
 
         public ActionResult Details(int? id)
@@ -99,7 +107,7 @@ namespace Notlarim102.WebApp.Controllers
                 dbNote.CategoryID = note.CategoryID;
                 dbNote.Text = note.Text;
                 dbNote.Title = note.Title;
-                dbNote.LikeCount = note.LikeCount;
+                //dbNote.LikeCount = note.LikeCount;
                 nm.Update(dbNote);
 
                 return RedirectToAction("Index");

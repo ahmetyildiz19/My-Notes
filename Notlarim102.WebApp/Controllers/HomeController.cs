@@ -1,4 +1,5 @@
 ﻿using Notlarim102.BusinessLayer;
+using Notlarim102.Common;
 using Notlarim102.Entity;
 using Notlarim102.Entity.Messages;
 using Notlarim102.Entity.ValueObject;
@@ -33,9 +34,9 @@ namespace Notlarim102.WebApp.Controllers
             //{
             //    return View(TempData["mm"] as List<Note>);
             //}
-
+            App.Common.GetCurrentUsername();
             //return View(nm.GetAllNotes().OrderByDescending(x => x.ModifiedOn).ToList());
-            return View(nm.QList().OrderByDescending(x => x.ModifiedOn).ToList());
+            return View(nm.QList().Where(x=>x.IsDraft==false).OrderByDescending(x => x.ModifiedOn).ToList());
         }
 
         public ActionResult ByCategory(int? id)

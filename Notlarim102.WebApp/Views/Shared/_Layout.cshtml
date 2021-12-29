@@ -35,7 +35,7 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container px-1 px-lg-2">
-            <a class="navbar-brand" href="#!">Notlarım - 102</a>
+            <a class="navbar-brand" href="/Home/Index">Notlarım - 102</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
@@ -95,7 +95,8 @@
                                 <li><a class="dropdown-item" href="/Home/DeleteProfile" onclick="return confirm('Are you sure remove this account?');">Profili Sil</a></li>
                                 <li><hr class="dropdown-divider active" /></li>
                                 <li class="nav-item active">
-                                   <li style="color:brown"> <a href="/Home/Logout" class="nav-link active"><i class="fas fa-sign-in-alt"></i> Çıkış </a>
+                                <li style="color:brown">
+                                    <a href="/Home/Logout" class="nav-link active"><i class="fas fa-sign-in-alt"></i> Çıkış </a>
                                 </li>
 
                             </ul>
@@ -126,14 +127,17 @@
         </div>
 
     </div>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Footer-->
-    @*@RenderSection("footer", required: false)*@
-    @*@RenderSection("footer",required:true)*@
+    @*@RenderSection("footer", required: false)
+    @RenderSection("footer",required:true)*@
     @Html.Partial("_PartialFooter")
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
     @*<script src="js/scripts.js"></script>*@
+
     <script src="~/Scripts/scripts.js"></script>
 </body>
 </html>

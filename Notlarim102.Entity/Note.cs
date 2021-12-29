@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -11,11 +12,12 @@ namespace Notlarim102.Entity
     [Table("tblNotes")]
     public class Note : MyEntityBase
     {
-        [StringLength(60),Required]
+        [DisplayName("Başlık"), StringLength(60),Required]
         public string Title { get; set; }
-        [StringLength(2000), Required]
+        [DisplayName("İçerik"), StringLength(2000), Required]
         public string Text { get; set; }
         public bool IsDraft { get; set; }
+        [DisplayName("Beğeni Sayısı")]
         public int LikeCount { get; set; }
         public int CategoryID { get; set; }
         
