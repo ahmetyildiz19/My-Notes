@@ -16,7 +16,7 @@ namespace Notlarim102.Entity.Messages
         UserAlreadyActive = 154,
         ActiveIdDoesNotExist = 155,
         UserNotFound = 156,
-        ProfileCouldNotUpdate = 157,
+        UserCouldNotUpdate = 157,
         UserCouldNotRemove = 158,
         UserCouldNotFind = 159,
         UserCouldNotInsert = 160,

@@ -43,7 +43,7 @@ namespace Notlarim102.BusinessLayer
             else
             {
                 DateTime now = DateTime.Now;
-                int dbResult = Insert(new NotlarimUser()
+                int dbResult = base.Insert(new NotlarimUser()
                 {
                     Username = data.Username,
                     Email = data.Email,
@@ -159,9 +159,9 @@ namespace Notlarim102.BusinessLayer
             {
                 res.Result.ProfileImageFilename = data.ProfileImageFilename;
             }
-            if (Update(res.Result) == 0)
+            if (base.Update(res.Result) == 0)
             {
-                res.AddError(ErrorMessageCode.ProfileCouldNotUpdate, "Profil Güncellenemedi.");
+                res.AddError(ErrorMessageCode.UserCouldNotUpdate, "Profil Güncellenemedi.");
             }
             return res;
         }
@@ -181,6 +181,70 @@ namespace Notlarim102.BusinessLayer
             else
             {
                 res.AddError(ErrorMessageCode.UserCouldNotFind, "Kullanıcı Bulunamadı.");
+            }
+            return res;
+        }
+
+        public new BusinessLayerResult<NotlarimUser> Insert(NotlarimUser data)
+        {
+            NotlarimUser user = Find(s => s.Username == data.Username || s.Email == data.Email);
+            res.Result = data;
+
+
+            if (user != null)
+            {
+                if (user.Username == data.Username)
+                {
+                    res.AddError(ErrorMessageCode.UsernameAlreadyExist, "Kullanici adi daha once kaydedilmis");
+                }
+                if (user.Email == data.Email) //else diyemeyiz cunku biri digerinin on kosulu degil
+                {
+                    res.AddError(ErrorMessageCode.EmailAlreadyExist, "Email daha once kullanilmis");
+                }
+            }
+            else
+            {
+                res.Result.ProfileImageFilename = "User1.jpg";
+                res.Result.ActivateGuid = Guid.NewGuid();
+
+                if (base.Insert(res.Result)==0)
+                {
+                    res.AddError(ErrorMessageCode.UserCouldNotInsert, "Kullanıcı Eklenemedi");
+                }
+            }
+            return res;
+        }
+
+        public new BusinessLayerResult<NotlarimUser> Update(NotlarimUser data)
+        {
+            NotlarimUser user = Find(x => x.Id != data.Id && x.Username == data.Username || x.Email == data.Email);
+            res.Result = data;
+
+            if (user != null)
+            {
+                if (user.Username == data.Username)
+                {
+                    res.AddError(ErrorMessageCode.UsernameAlreadyExist, "Bu kullanıcı adı daha önce alınmış.");
+                }
+                if (user.Email == data.Email)
+                {
+                    res.AddError(ErrorMessageCode.EmailAlreadyExist, "Bu E-Posta daha önce girilmiş.");
+                }
+                return res;
+            }
+
+            res.Result = Find(s => s.Id == data.Id);
+            res.Result.Email = data.Email;
+            res.Result.Name = data.Name;
+            res.Result.Surname = data.Surname;
+            res.Result.Password = data.Password;
+            res.Result.Username = data.Username;
+            res.Result.IsActive = data.IsActive;
+            res.Result.IsAdmin = data.IsAdmin;
+
+            if (base.Update(res.Result) == 0)
+            {
+                res.AddError(ErrorMessageCode.UserCouldNotUpdate, "Profil Güncellenemedi.");
             }
             return res;
         }
