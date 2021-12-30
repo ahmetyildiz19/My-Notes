@@ -16,11 +16,13 @@ namespace Notlarim102.Entity
         public string Title { get; set; }
         [DisplayName("İçerik"), StringLength(2000), Required]
         public string Text { get; set; }
+        [DisplayName("Taslak")]
         public bool IsDraft { get; set; }
         [DisplayName("Beğeni Sayısı")]
         public int LikeCount { get; set; }
-        public int CategoryID { get; set; }
-        
+        public int? CategoryID { get; set; }
+        public int? OwnerId { get; set; }
+
 
         public virtual NotlarimUser Owner { get; set; }
         public virtual Category Category { get; set; }

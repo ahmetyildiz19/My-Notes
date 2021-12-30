@@ -33,11 +33,13 @@ namespace Notlarim102.Entity
 
         [StringLength(30),ScaffoldColumn(false)]
         public string ProfileImageFilename { get; set; }
+        [DisplayName("Kullanıcı aktif mi?")]
         public bool IsActive { get; set; }
 
 
         [Required,ScaffoldColumn(false)]
         public Guid ActivateGuid { get; set; }
+        [DisplayName("Admin mi?")]
         public bool IsAdmin { get; set; }
 
         public virtual List<Note> Notes { get; set; }

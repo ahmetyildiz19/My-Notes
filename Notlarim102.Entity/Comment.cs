@@ -14,6 +14,12 @@ namespace Notlarim102.Entity
         [StringLength(300), Required]
         public string Text { get; set; }
 
+        //[ForeignKey("Note")]
+        public int? NoteId { get; set; }
+
+        //[ForeignKey("Owner")]
+        public int? OwnerId { get; set; }
+
         public virtual Note Note { get; set; }
         public virtual NotlarimUser Owner { get; set; }
         
