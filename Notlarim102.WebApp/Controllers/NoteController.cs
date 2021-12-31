@@ -53,7 +53,7 @@ namespace Notlarim102.WebApp.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.CategoryID = new SelectList(cm.List(), "Id", "Title");
+            ViewBag.CategoryID = new SelectList(CacheHelper.GetCategoriesFromCache(), "Id", "Title");
             return View();
         }
 
@@ -73,7 +73,7 @@ namespace Notlarim102.WebApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CategoryID = new SelectList(cm.List(), "Id", "Title", note.CategoryID);
+            ViewBag.CategoryID = new SelectList(CacheHelper.GetCategoriesFromCache(), "Id", "Title", note.CategoryID);
             return View(note);
         }
 
@@ -88,7 +88,7 @@ namespace Notlarim102.WebApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryID = new SelectList(cm.List(), "Id", "Title", note.CategoryID);
+            ViewBag.CategoryID = new SelectList(CacheHelper.GetCategoriesFromCache(), "Id", "Title", note.CategoryID);
             return View(note);
         }
 
@@ -112,7 +112,7 @@ namespace Notlarim102.WebApp.Controllers
 
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryID = new SelectList(cm.List(), "Id", "Title", note.CategoryID);
+            ViewBag.CategoryID = new SelectList(CacheHelper.GetCategoriesFromCache(), "Id", "Title", note.CategoryID);
             return View(note);
         }
 
